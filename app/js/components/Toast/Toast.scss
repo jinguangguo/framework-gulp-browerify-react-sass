@@ -1,0 +1,34 @@
+/**
+ * @file
+ * @author jinguangguo
+ * @date 2016/1/11
+ */
+
+.toast {
+    position: fixed;
+    left: 50%;
+    text-align: center;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    white-space: normal;
+    word-break: break-all;
+    line-height: 1.4;
+    font-size: 1.4rem;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    display: none;
+    z-index: 1100;     // 使用新规范值
+}
+
+.toast-black {
+    background: rgba(0,0,0,.8);
+    color: #fff;
+
+    >svg {
+        width: 1.6rem;
+        height: 1.6rem;
+        margin-right: .5rem;
+        position: relative;
+        top: .2rem;
+    }
+}

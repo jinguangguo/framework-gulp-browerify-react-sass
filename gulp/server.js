@@ -1,0 +1,157 @@
+/**
+ * @file
+ * @author jinguangguo
+ * @date 2016/1/11
+ */
+
+var gulp = require('gulp');
+var fs = require('fs');
+var Hapi = require('hapi');
+var through2 = require('through2');
+var autoprefixer = require('gulp-autoprefixer');
+var gulpBrowserify = require('gulp-browserify');
+var gulpSass = require('gulp-sass');
+
+// mock数据
+var mocks = require('../mock/index').mocks;
+
+
+gulp.task('server:start', function() {
+
+    "use strict";
+
+    var server = new Hapi.Server();
+
+    server.connection({
+        port: 8001,
+        host: '0.0.0.0'
+    });
+
+    /**
+     * 获取请求文件信息
+     * @param requestPath
+     * @returns {{directoryPath: string, filePath: string, fileType: string, fileName: string}}
+     */
+    function getFileInfo(requestPath) {
+        var filePath = '.' + requestPath;
+        var lastIndex = filePath.lastIndexOf('.');
+        var directoryPath = filePath.substring(0, lastIndex);
+        var fileType = filePath.substring(lastIndex + 1);
+        var fileName = filePath.substring(filePath.lastIndexOf('/') + 1, lastIndex);
+        return {
+            directoryPath: directoryPath,
+            filePath: filePath,
+            fileType: fileType,
+            fileName: fileName
+        };
+    }
+
+    var htmlUtil = {
+        /**
+         * 替换scss
+         * @param html
+         * @returns {string|XML|void|*}
+         * @private
+         */
+        _replaceScss: function(html) {
+            //var reg = /(\S+)\.scss([\?\S+]?)/g;
+            //html.replace(reg, '$1.css$2');
+            html = html.replace(/\.scss/g, '.css');
+            return html;
+        },
+        _replaceJsx: function(html) {
+            html = html.replace(/\.jsx/g, '.js');
+            return html;
+        },
+        /**
+         * 替换scss和jsx
+         * @param html
+         */
+        replaceResource: function(html) {
+            html = this._replaceScss(html);
+            html = this._replaceJsx(html);
+            return html;
+        }
+    };
+
+    // 静态资源 - OK
+    server.route({
+        method: 'GET',
+        path: '/{params*}',
+        handler: function(request, reply) {
+
+            console.log('request.path ==================== ' + request.path);
+
+            var fileInfo = getFileInfo(request.path);
+
+            if (/bower_components/g.test(fileInfo.filePath) === true) {
+                reply.file(fileInfo.filePath);
+                return;
+            }
+
+            switch (fileInfo.fileType) {
+
+                case 'html':
+                    reply.file(fileInfo.filePath);
+                    break;
+
+                case 'css':
+                case 'scss':
+                    //fs.exists(fileInfo.filePath, function(exists) {
+                    //    if (exists) {
+                    //        reply.file(fileInfo.filePath);
+                    //    } else {
+                    //
+                    //    }
+                    //});
+
+                    gulp.src(fileInfo.filePath.replace('.css','.scss'))
+                        .pipe(gulpSass())
+                        .pipe(autoprefixer({
+                            browserlist: ['Android', 'iOS']
+                        }))
+                        .pipe(
+                            through2.obj(
+                                function (file) {
+                                    reply(file.contents.toString()).type('text/css')
+                                }
+                            )
+                        );
+                    break;
+
+                case 'js':
+                    gulp.src(fileInfo.filePath)
+                        .pipe(gulpBrowserify({
+                            debug: true,
+                            transform: ['babelify']
+                        }))
+                        .pipe(through2.obj(function (file) {
+                            reply(file.contents.toString());
+                        }));
+                    break;
+
+                // font字体
+                case 'eot':
+                case 'ttf':
+                case 'woff':
+                case 'svg':
+                    reply.file(fileInfo.filePath.replace('fonts', 'icomoon/fonts'));
+                    break;
+
+                default:
+                    reply.file(fileInfo.filePath);
+            }
+
+        }
+    });
+
+    mocks.forEach(function (item) {
+        console.log('path:====================' + item.path);
+        server.route(item);
+    });
+
+    server.start(function() {
+        console.log('Server running at:', server.info.uri);
+    });
+
+});
