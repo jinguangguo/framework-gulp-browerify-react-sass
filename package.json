@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jinguangguo/projecct-framework#readme",
   "dependencies": {
+    "babel-preset-es2015": "^6.3.13",
     "babelify": "^7.2.0",
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
