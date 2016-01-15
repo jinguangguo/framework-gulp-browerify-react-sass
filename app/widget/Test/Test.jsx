@@ -13,8 +13,20 @@ let TEXTS = [
     }
 ];
 
-let TextClass = React.createClass({
-    render: function() {
+export class Text extends React.createClass {
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    tick() {
+        this.setState({
+            name: 'king'
+        });
+    }
+
+    render() {
         var items = [];
 
         _.forEach(TEXTS, function(text, index) {
@@ -33,7 +45,4 @@ let TextClass = React.createClass({
             </ul>
         );
     }
-});
-
-module.exports = TextClass;
-
+}

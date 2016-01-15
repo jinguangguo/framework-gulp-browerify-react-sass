@@ -5,10 +5,11 @@
  */
 
 import {Toast} from './components/Toast/Toast';
-//import {Test} from '../widget/Test/Test.jsx';
-let TextClass =  require('../widget/Test/Test.jsx');
+//import {Text} from '../widget/Test/Test.jsx';
+import {Photo} from '../widget/Photo/Photo.jsx';
 
 ReactDOM.render(
-    <TextClass />,
+    <Text />,
+    //<Photo />
     document.getElementById('app-index')
 );

@@ -8,9 +8,8 @@ var gulp = require('gulp');
 var Hapi = require('hapi');
 var through2 = require('through2');
 var autoprefixer = require('gulp-autoprefixer');
-var gulpBrowserify2 = require('gulp-browserify2');
+var gulpBrowserify = require('gulp-browserify2');
 var gulpSass = require('gulp-sass');
-var to5ify = require('6to5ify');
 
 // mock数据
 var mocks = require('../mock/index').mocks;
@@ -84,17 +83,9 @@ gulp.task('server:start', function() {
 
                 case 'js':
                 case 'jsx':
-                    to5ify.configure({
-                        blacklist: ["generators"],
-                        extensions: [".jsx"]
-                    });
                     gulp.src(fileInfo.filePath)
-                    .pipe(gulpBrowserify2({
-                        fileName: 'bundle.js',
-                        transform: to5ify,
-                        options: {
-                            debug: true
-                        }
+                    .pipe(gulpBrowserify({
+                        debug: true
                     }))
                     .pipe(through2.obj(function (file) {
                         reply(file.contents.toString());
