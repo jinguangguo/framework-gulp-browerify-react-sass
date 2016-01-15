@@ -4,22 +4,24 @@
  * @date 2016/1/15
  */
 
-let TEXTS = [
+const TEXTS = [
     {
-        txt: '开学季新装备'
+        id: 1,
+        txt: '文本1'
     },
     {
-        txt: '精品课程大促销'
+        id: 2,
+        txt: '文本2'
     }
 ];
 
-let TextClass = React.createClass({
-    render: function() {
-        var items = [];
+export class Text extends React.Component {
+    render() {
+        let items = [];
 
-        _.forEach(TEXTS, function(text, index) {
+        TEXTS.map(function(text, index) {
             items.push(
-                <li className="item">
+                <li className="item" key={text.id}>
                     <a href="javascript:;" title={text.txt} className="item-link">
                         {text.txt}
                     </a>
@@ -27,13 +29,7 @@ let TextClass = React.createClass({
             );
         });
 
-        return (
-            <ul className="widget-show-text">
-                {items}
-            </ul>
-        );
+        return <ul className="widget-show-text">{items}</ul>;
     }
-});
-
-module.exports = TextClass;
+}
 

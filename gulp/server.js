@@ -84,10 +84,10 @@ gulp.task('server:start', function() {
 
                 case 'js':
                 case 'jsx':
-                    to5ify.configure({
-                        blacklist: ["generators"],
-                        extensions: [".jsx"]
-                    });
+                    //to5ify.configure({
+                    //    blacklist: ["generators"],
+                    //    extensions: [".jsx"]
+                    //});
                     gulp.src(fileInfo.filePath)
                     .pipe(gulpBrowserify2({
                         fileName: 'bundle.js',
