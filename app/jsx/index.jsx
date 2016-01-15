@@ -5,10 +5,10 @@
  */
 
 import {Toast} from './components/Toast/Toast';
-//import {Test} from '../widget/Test/Test.jsx'
+//import {Test} from '../widget/Test/Test.jsx';
+let TextClass =  require('../widget/Test/Test.jsx');
 
-
-let name = 'king';
-
-console.log(name);
-
+ReactDOM.render(
+    <TextClass />,
+    document.getElementById('app-index')
+);

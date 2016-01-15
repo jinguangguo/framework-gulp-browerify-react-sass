@@ -13,9 +13,8 @@ let TEXTS = [
     }
 ];
 
-export class Test extends React.createClass{
-
-    render() {
+let TextClass = React.createClass({
+    render: function() {
         var items = [];
 
         _.forEach(TEXTS, function(text, index) {
@@ -34,6 +33,7 @@ export class Test extends React.createClass{
             </ul>
         );
     }
+});
 
-}
+module.exports = TextClass;
 
