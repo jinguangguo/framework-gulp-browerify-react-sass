@@ -3,7 +3,8 @@
 
 ### 技术选择
 > - 构建工具 - gulp（gulp-browerify ...）
-> - 开发框架 - react 、 react-router
+> - 开发框架 - react、react-router
+> - 常用库 - jquery
 > - 模块开发 - es6
 > - 样式开发 - scss
 
@@ -42,7 +43,7 @@ gulp server:start
  **app目录:**
 
 ```
-├── component：基础公用组件，如dialog、alert、confirm、toast等，这里最好不可使用react
+├── component：基础公用组件，如dialog、alert、confirm、toast等，这里最好使用react
 ├── icomoon：字体库文件
 ├── img：图片
 ├── jsx：react文件
