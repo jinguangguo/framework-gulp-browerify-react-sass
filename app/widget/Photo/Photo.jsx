@@ -6,6 +6,8 @@
 
 export class Photo extends React.Component {
     render() {
-        return <div>Photo</div>;
+        return (
+            <div><i className="icon icon-location"></i><img src="./img/a-bg.png" /></div>
+        );
     }
 }

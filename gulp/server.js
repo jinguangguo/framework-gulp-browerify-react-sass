@@ -107,7 +107,7 @@ gulp.task('server:start', function() {
                 case 'ttf':
                 case 'woff':
                 case 'svg':
-                    reply.file(fileInfo.filePath.replace('fonts', 'icomoon/fonts'));
+                    reply.file(fileInfo.filePath.replace('fonts', '../icomoon/fonts'));
                     break;
 
                 default:

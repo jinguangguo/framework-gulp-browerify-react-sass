@@ -21,3 +21,6 @@ require('./deploy/js');
 require('./deploy/html');
 
 gulp.task('deploy:debug', sequence('clean', ['font', 'img', 'scss', 'js', 'html']));
+
+// html -> js -> scss -> img ->font
+gulp.task('deploy:prod', sequence('clean', ['font:prod']));
