@@ -17,7 +17,7 @@ gulp.task('img', function() {
             svgoPlugins: [{removeViewBox: false}],
             use: [pngquant()]
         }))
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest('./output/'));
 });
 
 gulp.task('img:prod', ['scss:prod'], function() {
