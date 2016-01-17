@@ -53,9 +53,11 @@ gulp server:start
 ```
 
 
-### 规范
+### React开发
 
 - [React 编码规范](https://github.com/Minwe/style-guide/blob/master/React.js.md)
+- [React Router](https://github.com/rackt/react-router)
+- [React Bootstrap](http://react-bootstrap.github.io/)
 
 
 ### 基于react的常用工具
@@ -69,5 +71,6 @@ gulp server:start
 - [React官网](https://facebook.github.io/react/)
 - [React源码](https://github.com/facebook/react)
 - [React Router](https://github.com/rackt/react-router)
+- [React Bootstrap](http://react-bootstrap.github.io/)
 - [Scss](http://sass-lang.com/)
 - [ECMAScript 6入门](http://es6.ruanyifeng.com/)
