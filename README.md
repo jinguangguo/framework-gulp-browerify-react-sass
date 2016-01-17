@@ -35,7 +35,7 @@ gulp server:start
 
 ### icon使用
 > - 优先使用现成字体库：http://fontawesome.io/
-> - 使用阿里图标库：http://iconfont.cn/，将图标的svg下载成功后，上传至https://icomoon.io/后，再下载复制于app/icomoon文件夹中即可
+> - 使用阿里图标库：[http://iconfont.cn/](http://iconfont.cn/)，将图标的svg下载成功后，上传至[https://icomoon.io/](https://icomoon.io/)后，再下载复制于app/icomoon文件夹中即可
 
 
 ### 项目目录
