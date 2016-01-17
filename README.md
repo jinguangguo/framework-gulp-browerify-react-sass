@@ -37,6 +37,9 @@ gulp server:start
 > - 优先使用现成字体库：http://fontawesome.io/
 > - 使用阿里图标库：[http://iconfont.cn/](http://iconfont.cn/)，将图标的svg下载成功后，上传至[https://icomoon.io/](https://icomoon.io/)后，再下载复制于app/icomoon文件夹中即可
 
+### UI库使用
+> - 暂时使用[bootstrap](http://www.bootcss.com/), 通过重定义bootstrap-theme.css文件来实现定制化
+
 
 ### 项目目录
 
@@ -55,14 +58,14 @@ gulp server:start
 
 ### React开发
 
-- [React 编码规范](https://github.com/Minwe/style-guide/blob/master/React.js.md)
-- [React Router](https://github.com/rackt/react-router)
-- [React Bootstrap](http://react-bootstrap.github.io/)
+> - [React 编码规范](https://github.com/Minwe/style-guide/blob/master/React.js.md)
+> - [React Router](https://github.com/rackt/react-router)
+> - [React Bootstrap](http://react-bootstrap.github.io/)
 
 
 ### 基于react的常用工具
-- [React Complementary Tools](https://github.com/facebook/react/wiki/Complementary-Tools)
-- [reapp-ui](https://github.com/reapp/reapp-ui)
+> - [React Complementary Tools](https://github.com/facebook/react/wiki/Complementary-Tools)
+> - [reapp-ui](https://github.com/reapp/reapp-ui)
 
 
 ### 整体技术方案学习
