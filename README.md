@@ -308,12 +308,12 @@ React.render(
 
 ### React Devtool
 
-请参考: [New React Devtools Beta](https://facebook.github.io/react/blog/2015/08/03/new-react-devtools-beta.html)
+* 请参考: [New React Devtools Beta](https://facebook.github.io/react/blog/2015/08/03/new-react-devtools-beta.html)
 
 
 ### React发展
 
-请参考: [React in 2015 - Retrospection](https://blog.risingstack.com/react-in-2015/)
-请参考: [展望2016，REACT.JS 最佳实践](http://insights.thoughtworkers.org/react-js-best-practices-for-2016/)
+* 请参考: [React in 2015 - Retrospection](https://blog.risingstack.com/react-in-2015/)
+* 请参考: [展望2016，REACT.JS 最佳实践](http://insights.thoughtworkers.org/react-js-best-practices-for-2016/)
 
 
