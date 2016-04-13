@@ -102,3 +102,218 @@ gulp deploy:prod;       # 产品模式
 - [React Bootstrap](http://react-bootstrap.github.io/)
 - [Scss](http://sass-lang.com/)
 - [ECMAScript 6入门](http://es6.ruanyifeng.com/)
+
+
+### React组件的生命周期
+
+Es组件生命周期——每个React组件在加载时都有特定的生命周期，在此期间不同的方法会被执行。下面简单介绍React组件的生命周期：
+
+* componentWillMount
+该方法会在组件render之前执行，并且永远只执行一次。
+
+* componentDidMount
+该方法会在组件加载完毕之后立即执行。此时，组件已经完成了DOM结构的渲染， 并可以通过 this.getDOMNode() 方法来访问。
+
+* componentWillReceiveProps
+组件接收到一个新的prop时会被执行，且该方法在初始render时不会被调用。
+
+* shouldComponentUpdate
+在组件接收到新的props或state时被执行。
+
+* componentWillUpdate
+在组件接收到新的props或者state但还没有render时被执行。 在初始化时不会被执行。
+
+* componentDidUpdate
+在组件完成更新后立即执行。在初始化时不会被执行。 一般会在组件完成更新后被使用。
+
+* componentWillUnMount
+在组件从DOM中unmount后立即执行。该方法主要用来执行一些必要的清理任务。
+
+
+### React事件参数传递
+
+使用ES5中的bind函数, 注意它返回的是一个函数, 能够改变其运行的作用域
+
+```javascript
+<div onClick={this.handleClick.bind(this, params)}>{item}</div>
+
+```
+
+### React组件间的通信
+
+> - 父子通信: 直接通过props进行通信
+> - 子父通信: 例如： GroceryList 组件有一些通过数组生成的子节点。当这些节点被点击的时候，你想要展示这个节点的名字：
+
+```javascript
+var GroceryList = React.createClass({
+  handleClick: function(i) {
+    console.log('You clicked: ' + this.props.items[i]);
+  },
+
+  render: function() {
+    return (
+      <div>
+        {this.props.items.map(function(item, i) {
+          return (
+            <div onClick={this.handleClick.bind(this, i)} key={i}>{item}</div>
+          );
+        }, this)}
+      </div>
+    );
+  }
+});
+
+React.render(
+  <GroceryList items={['Apple', 'Banana', 'Cranberry']} />, mountNode
+);
+```
+
+> - 没有父子关系通信: 对于没有 父-子 关系的组件间的通信，你可以设置你自己的全局事件系统。 在 componentDidMount() 里订阅事件，在 componentWillUnmount() 里退订，然后在事件回调里调用 setState()。
+
+更多内容请参考官方介绍: [组件间的通信](http://reactjs.cn/react/tips/communicate-between-components.html)
+
+
+### React单例和多例的写法
+
+这里的多例, 指的是每一次都会重新执行组件的生命周期所用到的方法. 而单例只会执行一次.
+我们可以使用简单的if判断来实现之.
+
+```javascript
+
+let bread = null;
+if (this.state.isSingle === true) {
+    bread = <Bread moduleName="企业管理" />;
+} else {
+    bread = <div className="nothing">没实例化</div>;
+}
+
+return (
+    <div>
+        { bread }
+    </div>
+);
+
+```
+这样, 随着state中的isSingle的切换, 每一次都会重新创建bread实例
+
+单例的写法就很简单了, 直接写之
+
+```javascript
+return (
+    <div>
+        <Bread moduleName="企业管理" />
+    </div>
+);
+```
+
+### React中的DOM操作
+
+Refs和getDOMNode()
+为了和浏览器交互，你将需要对DOM节点的引用。每一个挂载的React组件有一个getDOMNode()方法，你可以调用这个方法来获取对该节点的引用。
+
+```javascript
+var MyComponent = React.createClass({
+  handleClick: function() {
+    // Explicitly focus the text input using the raw DOM API.
+    this.refs.myTextInput.getDOMNode().focus();
+  },
+  render: function() {
+    // The ref attribute adds a reference to the component to
+    // this.refs when the component is mounted.
+    return (
+      <div>
+        <input type="text" ref="myTextInput" />
+        <input
+          type="button"
+          value="Focus the text input"
+          onClick={this.handleClick}
+        />
+      </div>
+    );
+  }
+});
+
+React.render(
+  <MyComponent />,
+  document.getElementById('example')
+);
+
+```
+
+更多内容请参考官方介绍: [浏览器中的工作原理](http://reactjs.cn/react/docs/working-with-the-browser.html)
+
+
+### React中的双向绑定工具
+ReactLink是一种简单表达React双向绑定的方式。
+
+```javascript
+var WithLink = React.createClass({
+  mixins: [React.addons.LinkedStateMixin],
+  getInitialState: function() {
+    return {message: 'Hello!'};
+  },
+  render: function() {
+    return <input type="text" valueLink={this.linkState('message')} />;
+  }
+});
+
+```
+更多内容请参考官方介绍: [双向绑定辅助工具](http://reactjs.cn/react/docs/two-way-binding-helpers.html)
+
+
+### React中的Mixins
+组件是 React 里复用代码最佳方式，但是有时一些复杂的组件间也需要共用一些功能。有时会被称为 跨切面关注点。React 使用 mixins 来解决这类问题。
+
+```javascript
+var SetIntervalMixin = {
+  componentWillMount: function() {
+    this.intervals = [];
+  },
+  setInterval: function() {
+    this.intervals.push(setInterval.apply(null, arguments));
+  },
+  componentWillUnmount: function() {
+    this.intervals.map(clearInterval);
+  }
+};
+
+var TickTock = React.createClass({
+  mixins: [SetIntervalMixin], // 引用 mixin
+  getInitialState: function() {
+    return {seconds: 0};
+  },
+  componentDidMount: function() {
+    this.setInterval(this.tick, 1000); // 调用 mixin 的方法
+  },
+  tick: function() {
+    this.setState({seconds: this.state.seconds + 1});
+  },
+  render: function() {
+    return (
+      <p>
+        React has been running for {this.state.seconds} seconds.
+      </p>
+    );
+  }
+});
+
+React.render(
+  <TickTock />,
+  document.getElementById('example')
+);
+```
+
+更多内容请参考官方介绍: [可复用组件](http://reactjs.cn/react/docs/reusable-components.html)
+
+
+### React Devtool
+
+请参考: [New React Devtools Beta](https://facebook.github.io/react/blog/2015/08/03/new-react-devtools-beta.html)
+
+
+### React发展
+
+请参考: [React in 2015 - Retrospection](https://blog.risingstack.com/react-in-2015/)
+请参考: [展望2016，REACT.JS 最佳实践](http://insights.thoughtworkers.org/react-js-best-practices-for-2016/)
+
+
